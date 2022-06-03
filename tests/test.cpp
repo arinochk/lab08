@@ -1,7 +1,4 @@
-//
-// Created by keyow on 29.03.2022.
-//
-
+// Copyright 2018 Your Name <your_email>
 #include <gtest/gtest.h>
 
 #include <Transaction.h>
