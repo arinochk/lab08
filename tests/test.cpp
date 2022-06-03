@@ -4,7 +4,7 @@
 #include <Transaction.h>
 #include <Account.h>
 
-TEST(Transaction, fee_test) {
+TEST(Transaction, fee_combo_test) {
     Account Sara(228, 201);
     Account David(1337, 0);
 
