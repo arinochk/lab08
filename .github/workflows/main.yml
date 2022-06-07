@@ -1,46 +1,10 @@
-# This is a basic workflow to help you get started with Actions
-name: CI
-on: [ push ]
+name: docker CI
+on: push
 jobs:
-  building:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: checkout
-        uses: actions/checkout@master
-
-      - name: build
-        shell: bash
-        run: |
-          git submodule update --init --recursive
-          cmake -B build
-          cd build
-          make
-  testing:
+  build_and_run_docker:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout
-        uses: actions/checkout@master
-
-      - name: test
-        shell: bash
+      - uses: actions/checkout@v2
+      - name: build and run docker
         run: |
-          git submodule update --init --recursive
-          cmake -B build
-          cd build
-          make ./tests
-          ./tests
-      - name: install lcov
-        run: |
-          sudo apt-get install -y lcov
-      - name: run lcov
-        run: | 
-          lcov --capture --directory build/CMakeFiles/banking.dir/banking --output-file lcov.info
-          lcov --remove lcov.info '/usr/include/*' -o lcov.info
-          lcov --remove lcov.info '/home/runner/work/lab05/lab05/third-party/gtest/*' -o lcov.info
-      - name: coveralls
-        uses: coverallsapp/github-action@master
-        with:
-          path-to-lcov: "./lcov.info"
-          github-token: ${{ secrets.github_token }}
-          
+          docker build -t fibonacci .
